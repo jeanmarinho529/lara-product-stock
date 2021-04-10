@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Repository\Contracts\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use \Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -25,7 +26,10 @@ class CategoryController extends Controller
     public function index()
     {
         try{
-            $data = $this->categoryRepository->get(['id','name']);
+            $data = Cache::remember('all-category', now()->addMinute(120), function () {
+                return $this->categoryRepository->get(['id','name']);
+            });
+            
             return response()->json(['success' => true, 'data' => $data], 200);
 
         } catch(ModelNotFoundException $e) {
@@ -46,7 +50,10 @@ class CategoryController extends Controller
     {
         try{
             $data = $this->categoryRepository->create($request->all());
-            return response()->json(['success' => true, 'data' => $data], 201);
+            if($data) {
+                Cache::forget('all-category');
+                return response()->json(['success' => true, 'data' => $data], 201);
+            }
 
         } catch(\Exception $e) {
             info($e);
@@ -86,9 +93,11 @@ class CategoryController extends Controller
         try{
             $data = $this->categoryRepository->update($id, $request->all());
             
-            if($data)
-                return response()->json([],204);                
-            
+            if($data) {
+                Cache::forget('all-category');
+                return response()->json([],204);
+            }
+
         } catch(ModelNotFoundException $e) {
             return response()->json('Not Found',404);
         } catch(\Exception $e) {
@@ -108,9 +117,10 @@ class CategoryController extends Controller
         try{
             $data = $this->categoryRepository->delete($id);
             
-            if($data)
+            if($data) {
+                Cache::forget('all-category');
                 return response()->json([],204);                
-            
+            }
         
         } catch(ModelNotFoundException $e) {
             return response()->json('Not Found',404);

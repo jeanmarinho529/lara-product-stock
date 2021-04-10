@@ -30,7 +30,7 @@ abstract class AbstractRepository
 
     public function find($id, $fields = ['*'])
     {
-        return $this->model->select($fields)->find($id);
+        return $this->model->select($fields)->findOrfail($id);
     }
 
     public function update($id, $fields)

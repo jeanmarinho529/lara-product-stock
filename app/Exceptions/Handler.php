@@ -2,7 +2,6 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -27,22 +26,15 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+    
 
     /**
-     * Render an exception into an HTTP response.
+     * Register the exception handling callbacks for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return void
      */
-    public function render($request, Throwable $exception)
+    public function register()
     {
-        if ($request->is('api/*')){
-            if ($exception instanceof ValidationException) {
-                return response()->json($exception->errors(), $exception->status);
-            }
-        }
-
         $this->reportable(function (Throwable $e) {
             //
         });
