@@ -15,4 +15,8 @@ class Category extends Model
     {
         $this->attributes['name'] = ucwords($value);
     }
+
+    protected $dontReport = [
+        InvalidOrderException::class,
+    ];
 }
