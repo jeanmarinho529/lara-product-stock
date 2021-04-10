@@ -69,7 +69,7 @@ class CategoriesTest extends TestCase
      */
     public function edit_category_is_not_admin()
     {
-        $user = User::first();
+        $user = User::whereNotIn('email',['admin@admin.com'])->first();
         $token = $user->createToken('API Token')->plainTextToken;
 
         $category = Category::select('id','name')->first();
@@ -89,7 +89,7 @@ class CategoriesTest extends TestCase
      */
     public function delete_category_is_not_admin()
     {
-        $user = User::first();
+        $user = User::whereNotIn('email',['admin@admin.com'])->first();
         $token = $user->createToken('API Token')->plainTextToken;
         
         $category = Category::select('id','name')->orderBy('id','desc')->first();

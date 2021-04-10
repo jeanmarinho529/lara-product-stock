@@ -16,7 +16,9 @@ class Category extends Model
         $this->attributes['name'] = ucwords($value);
     }
 
-    protected $dontReport = [
-        InvalidOrderException::class,
-    ];
+
+    public function products() //Relationship Product
+    {
+        return $this->hasMany(Product::class);
+    }
 }
