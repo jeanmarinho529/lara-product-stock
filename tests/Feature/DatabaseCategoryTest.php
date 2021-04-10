@@ -2,11 +2,17 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
+/**
+ * Database categories
+ * 
+ * 1° Check table database
+ * 2° Check column table
+ * 3° Check model State
+ */
 class DatabaseCategoryTest extends TestCase
 {
      /**
@@ -34,7 +40,7 @@ class DatabaseCategoryTest extends TestCase
     public function check_categories_column()
     {
         $this->assertTrue(
-            Schema::hasColumns('states', [
+            Schema::hasColumns('categories', [
                 'id',
                 'name',
                 'created_at',

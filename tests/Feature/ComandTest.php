@@ -2,11 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
+/**
+ * 1° Test command popular state database
+ * 2° Test command popular category database
+ */
 class ComandTest extends TestCase
 {
     /**

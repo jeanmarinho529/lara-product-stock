@@ -5,7 +5,13 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-
+/**
+ * Database states
+ * 
+ * 1° Check table database
+ * 2° Check column table
+ * 3° Check model State
+ */
 class DatabaseStateTest extends TestCase
 {
     /**

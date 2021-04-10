@@ -24,6 +24,7 @@ class PopularCategoryDatabase extends Command
 
     /**
      * Create a new command instance.
+     * Command for popular category table with api from Mercado Livre.
      *
      * @return void
      */

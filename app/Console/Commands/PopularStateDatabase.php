@@ -34,6 +34,7 @@ class PopularStateDatabase extends Command
 
     /**
      * Execute the console command.
+     * Command for popular states table with api from IBGE.
      *
      * @return int
      */

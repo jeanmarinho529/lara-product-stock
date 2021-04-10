@@ -39,7 +39,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 
+    // Route authorized for admin only
+    Route::group(['middleware' => ['is.admin']], function () {
+        Route::put('categories/{id}', [CategoryController::class, 'update'])->name('api-category-update');
+        Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('api-category-destroy');
+    });
+
     Route::post('categories', [CategoryController::class, 'store'])->name('api-category-create');
-    Route::put('categories/{id}', [CategoryController::class, 'update'])->name('api-category-update');
-    Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('api-category-destroy');
+
 });
