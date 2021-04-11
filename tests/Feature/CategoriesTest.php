@@ -37,7 +37,7 @@ class CategoriesTest extends TestCase
      */
     public function check_route_show_category()
     {
-        $category = Category::factory()->create();
+        $category = Category::first();
         $response = $this->get(route('api-category-show', $category->id));
 
         $response->assertStatus(200);

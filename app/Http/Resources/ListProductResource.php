@@ -18,7 +18,7 @@ class ListProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'category' => $this->category->name,
+            'category' => $this->category ? $this->category->name : null,
             'amount' => $this->amount,
             'current_quantity' => $this->current_quantity,
             'minimum_quantity' => $this->minimum_quantity
