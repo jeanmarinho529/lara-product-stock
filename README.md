@@ -1,62 +1,113 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Sobre
+Um simples projeto construído em Laravel 8. De castro de usuários, produtos e categorias.
+## Features
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- Auth;
+- Crud de produtos;
+- Movimentação de quantidade produtos;
+- Envio de email, quando a quantidade mínima de produtos for atingida;
+- Crud de categorias;
+- Listagem de estados brasileiro;
 
-## About Laravel
+## Camadas utilizadas
+- Service
+- Repository
+- Interface 
+- Request Validation
+- API Resources
+- ACL
+- Mail
+- Factory
+- Job
+- Queue
+- Command
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instalação
+Instalando dependências: 
+```sh
+$ cd lara-product-stock
+$ composer install
+```
+Criando um .env e gerando  key da sua aplicação:
+```sh
+$ cp .env.example .env
+$ php artisan key:generate
+```
+Execute migration e popule seu banco de dados:
+```sh
+$ php artisan migrate
+$ php artisan db:seed
+```
+Execute o comando para popular a tabela states, [consumindo da api do IBGE](https://servicodados.ibge.gov.br/api/v1/localidades/estados):
+```sh
+$ php artisan command:popular-state
+```
+Execute o comando para popular a tabela de categories, [consumindo da api do Mercado Livre](https://api.mercadolibre.com/sites/MLB/categories):
+```sh
+$ php artisan command:popular-category
+```
+Execute os teste para ver se tudo está ok:
+```sh
+$ ./vendor/bin/phpunit
+```
+Por fim execute a aplicação:
+```sh
+$ php artisan serve
+```
+## Códigos de Retorno
+- ### Lista de Códigos de Sucesso
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+|  Http | Descrição   | Método HTTP |
+| :------------: | :------------: | :------------: |
+| 200 | Sucesso                          | GET e POST   |
+| 201 | Criado com sucesso               | POST         |
+| 204 | Alterado ou excluído com sucesso | PUT e DELETE |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- ### Lista de Códigos de Erro
+|  Http | Descrição |
+| :------------: | :------------: |
+| 400 | Bad Request                     | 
+| 401 | Requisição Requer Autenticação  | 
+| 403 | Requisição Negada               | 
+| 404 | Recurso não Encontrado          |
+| 405 | Método não Permitido            |
+| 409 | Conflito com a regra de negócio |
+| 500 | Erro de servidor                |
 
-## Learning Laravel
+## [End Point](https://laraproductapi.docs.apiary.io/#reference/0/rotas-publicas/listar-todos-os-produtos)
+- ### End Point publicos
+|  Method | Route   | Ação  |
+| :------------: | :------------: | :------------: |
+| post | /api/v1/auth/register    | Registrar novo usuário               |
+| post | /api/v1/auth/login       | Login                                |
+| get  | /api/v1/states           | Lista todos os estados Brasileiros   |
+| get  | /api/v1/categories       | Lista todas as categorias            |
+| get  | /api/v1/categories/{id}  |   Lista todas as categorias          |
+| get  | /api/v1/categories/{id}  |   Lista apenas o categoria escolhida |
+| get  | /api/v1/products         | Lista todos os produtos              |
+| get  | /api/v1/products/{id}    | Lista apenas o produto escolhido     |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- ### End Point Authentication
+|  Method | Route   | Ação  |
+| :------------: | :------------: | :------------: |
+| post  | /api/v1/auth/logout              | Fazer logout                                  |
+| post  | /api/v1/categories               | Registrar nova categoria                      |
+| post  | /api/v1/products                 | Registrar novo produto                        |
+| post  | /api/v1/products/movement/{slug} | Retirar ou adicionar quantidade de um produto |
+| put   | /api/v1/products/{slug}          | Editar um produto                             |
+| delete| /api/v1/products/{slug}          | Excluir um produto                            |
+###### Obs:  Apenas usuários proprietários ou admin podem editar ou deletar o produto. 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- ### End Point Authentication + Middleware
+|  Method | Route   | Ação  |
+| :------------: | :------------: | :------------: |
+| put    | /api/v1/categories/{id} | Editar uma categoria  |
+| delete | /api/v1/categories/{id} | Deletar uma categoria |
 
-## Laravel Sponsors
+###### Obs: Apenas o usuários admin pode excluir ou deletar uma categoria.
+### [Confira os End Points clicando aqui](https://laraproductapi.docs.apiary.io/#reference/0/rotas-publicas/listar-todos-os-produtos)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT license](https://opensource.org/licenses/MIT).
