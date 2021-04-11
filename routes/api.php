@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\{CategoryController, StateController};
+use App\Http\Controllers\Api\{CategoryController, ProductController, StateController};
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +30,8 @@ Route::get('states', StateController::class);
 Route::get('categories', [CategoryController::class, 'index'])->name('api-category-index');
 Route::get('categories/{id}', [CategoryController::class, 'show'])->name('api-category-show');
 
+Route::get('products', [ProductController::class, 'index'])->name('api-producty-index');
+Route::get('products/{slug}', [ProductController::class, 'show'])->name('api-producty-show');
 
 // Authenticated routes 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -47,4 +49,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('categories', [CategoryController::class, 'store'])->name('api-category-create');
 
+    Route::post('products', [ProductController::class, 'store'])->name('api-producty-create');
+    Route::post('products/movement/{slug}', [ProductController::class, 'movement'])->name('api-producty-movement');
+    Route::put('products/{slug}', [ProductController::class, 'update'])->name('api-producty-update');
+    Route::delete('products/{slug}', [ProductController::class, 'destroy'])->name('api-producty-destroy');
 });
