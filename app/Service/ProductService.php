@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Http\Resources\ListProductResource;
+use App\Jobs\SendEmailProductMinimumJob;
 use App\Repository\Contracts\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -107,12 +108,16 @@ class ProductService extends ServiceProvider
     public function movement(string $slug, int $quantity)
     {
         try{
-            $product = $this->productInterface->findProduct($slug, ['id','user_id','current_quantity']);
+            $product = $this->productInterface->findProduct($slug, ['id','user_id','current_quantity','minimum_quantity']);
 
             if (Gate::allows('verify-user-product',$product)) { 
                 $quantity = $product->current_quantity + $quantity;
 
                 if  ($quantity >= 0) {
+                    if ($quantity <= $product->minimum_quantity and !($product->current_quantity <= $product->minimum_quantity)) {
+                        SendEmailProductMinimumJob::dispatch($product, $product->user)->delay(now()->addSeconds(10));
+                    }
+
                     $data = $this->productInterface->updateProduct($slug, ['current_quantity' => $quantity]);
                     return ['success' => true, 'data' => $data, 'code' => 204];
                 }

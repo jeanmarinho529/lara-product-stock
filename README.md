@@ -82,8 +82,8 @@ $ php artisan serve
 | post | /api/v1/auth/login       | Login                                |
 | get  | /api/v1/states           | Lista todos os estados Brasileiros   |
 | get  | /api/v1/categories       | Lista todas as categorias            |
-| get  | /api/v1/categories/{id}  |   Lista todas as categorias          |
-| get  | /api/v1/categories/{id}  |   Lista apenas o categoria escolhida |
+| get  | /api/v1/categories/{id}  | Lista apenas a categoria escolhida   |
+| get  | /api/v1/categories/{id}  | Lista apenas o categoria escolhida   |
 | get  | /api/v1/products         | Lista todos os produtos              |
 | get  | /api/v1/products/{id}    | Lista apenas o produto escolhido     |
 
@@ -107,7 +107,11 @@ $ php artisan serve
 ###### Obs: Apenas o usuários admin pode excluir ou deletar uma categoria.
 ### [Confira os End Points clicando aqui](https://laraproductapi.docs.apiary.io/#reference/0/rotas-publicas/listar-todos-os-produtos)
 
-
+### OBS
+Para receber e-mail quando a quantidade mínima de um determinado produto for atingido é necessário que você configure o serviço de e-mail no .env e rode o seguinte comando abaixo:
+```sh
+$ php artisan queue:work
+```
 ## License
 
 [MIT license](https://opensource.org/licenses/MIT).
