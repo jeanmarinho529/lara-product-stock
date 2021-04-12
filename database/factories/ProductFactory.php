@@ -27,7 +27,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->sentence,
             'description' => $this->faker->sentence,
             'amount' => $this->faker->randomNumber(2),
-            'current_quantity' => $this->faker->randomDigit,
+            'current_quantity' => $this->faker->randomDigitNot(0),
             'minimum_quantity' => $this->faker->randomDigit,
         ];
     }
