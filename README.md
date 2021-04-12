@@ -83,7 +83,6 @@ $ php artisan serve
 | get  | /api/v1/states           | Lista todos os estados Brasileiros   |
 | get  | /api/v1/categories       | Lista todas as categorias            |
 | get  | /api/v1/categories/{id}  | Lista apenas a categoria escolhida   |
-| get  | /api/v1/categories/{id}  | Lista apenas o categoria escolhida   |
 | get  | /api/v1/products         | Lista todos os produtos              |
 | get  | /api/v1/products/{id}    | Lista apenas o produto escolhido     |
 
