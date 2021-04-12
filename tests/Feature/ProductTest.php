@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\{Category, Product, User};
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -82,7 +81,7 @@ class ProductTest extends TestCase
             'Authorization' => "Bearer {$token}"
         ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
     }
 
     /**
@@ -101,7 +100,7 @@ class ProductTest extends TestCase
             'Authorization' => "Bearer {$token}"
         ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
     }
 
     /**

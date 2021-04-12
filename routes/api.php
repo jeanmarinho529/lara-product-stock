@@ -16,14 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 // Public routes
-Route::post('/auth/register', [AuthController::class, 'register']);
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
+Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 
 Route::get('states', StateController::class);
 
@@ -35,19 +30,16 @@ Route::get('products/{slug}', [ProductController::class, 'show'])->name('api-pro
 
 // Authenticated routes 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/me', function(Request $request) {
-        return auth()->user();
-    });
 
-    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    Route::post('categories', [CategoryController::class, 'store'])->name('api-category-create');
 
     // Route authorized for admin only
     Route::group(['middleware' => ['is.admin']], function () {
         Route::put('categories/{id}', [CategoryController::class, 'update'])->name('api-category-update');
         Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('api-category-destroy');
     });
-
-    Route::post('categories', [CategoryController::class, 'store'])->name('api-category-create');
 
     Route::post('products', [ProductController::class, 'store'])->name('api-product-create');
     Route::post('products/movement/{slug}', [ProductController::class, 'movement'])->name('api-product-movement');

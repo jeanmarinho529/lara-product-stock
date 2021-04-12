@@ -7,7 +7,6 @@ use App\Http\Requests\CategoryRequest;
 use App\Repository\Contracts\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use \Illuminate\Support\Facades\Cache;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -21,7 +20,6 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -43,8 +41,6 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\CategoryRequest $request
-     * @return \Illuminate\Http\Response
      */
     public function store(CategoryRequest $request)
     {
@@ -64,10 +60,8 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         try{
             $data = $this->categoryRepository->find($id);
@@ -84,11 +78,8 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(CategoryRequest $request, int $id)
     {
         try{
             $data = $this->categoryRepository->update($id, $request->all());
@@ -109,10 +100,8 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         try{
             $data = $this->categoryRepository->delete($id);

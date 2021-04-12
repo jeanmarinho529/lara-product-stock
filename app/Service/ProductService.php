@@ -75,7 +75,7 @@ class ProductService extends ServiceProvider
                 return ['success' => true, 'data' => $data, 'code' => 204];
             }
 
-            return ['success' => false, 'message' => 'Unauthorized user.', 'code' => 401];
+            return ['success' => false, 'message' => 'Unauthorized user.', 'code' => 403];
 
         } catch(ModelNotFoundException $e) {
             return ['success' => false, 'message' => 'Not Found.', 'code' => 404];
@@ -95,7 +95,7 @@ class ProductService extends ServiceProvider
                 return ['success' => true, 'data' => $data, 'code' => 204];
             }
 
-            return ['success' => false, 'message' => 'Unauthorized user.', 'code' => 401];
+            return ['success' => false, 'message' => 'Unauthorized user.', 'code' => 403];
 
         } catch(ModelNotFoundException $e) {
             return ['success' => false, 'message' => 'Not Found.', 'code' => 404];
@@ -125,7 +125,7 @@ class ProductService extends ServiceProvider
                 return ['success' => false, 'message' => 'We do not have this quantity available for withdrawal. Available quantity: ' . $product->current_quantity, 'code' => 409];
             }
 
-            return ['success' => false, 'message' => 'Unauthorized user.', 'code' => 401];
+            return ['success' => false, 'message' => 'Unauthorized user.', 'code' => 403];
 
         } catch(ModelNotFoundException $e) {
             return ['success' => false, 'message' => 'Not Found.', 'code' => 404];

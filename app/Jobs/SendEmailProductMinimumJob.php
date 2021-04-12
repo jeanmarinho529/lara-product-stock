@@ -38,8 +38,6 @@ class SendEmailProductMinimumJob implements ShouldQueue
      */
     public function handle()
     {
-        info($this->user);
-        info($this->product);
         Mail::send(new MailProductMinimum($this->product, $this->user));
     }
 }
